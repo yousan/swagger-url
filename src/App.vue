@@ -1,8 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.2.2/swagger-ui-bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.2.2/swagger-ui-standalone-preset.js"></script>
-<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-
-
 <template>
     <div id="app">
         <div id="swagger-ui"></div>
@@ -44,6 +39,7 @@
 
 <script>
   // import HelloWorld from './components/HelloWorld.vue'
+  import {SwaggerUICore} from 'swagger-ui';
   import jsyaml from 'js-yaml';
 
   export default {
