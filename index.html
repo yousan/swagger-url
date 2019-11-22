@@ -75,7 +75,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: get_url(),
+        url: get_url() ? get_url() : 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/yaml/petstore.yaml',
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
