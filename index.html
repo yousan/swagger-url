@@ -1,0 +1,98 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js"> </script>
+    <script src="./swagger-ui-standalone-preset.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js"></script>
+    <script>
+      async function load() {
+        const res = await fetch('https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml')
+        const res_body = await res.text();
+        const swagger_json = jsyaml.load(res_body);
+      }
+      load();
+      function get_url() {
+        // @see https://stackoverflow.com/questions/35914069/how-can-i-get-query-parameters-from-a-url-in-vue-js
+        let uri = window.location.href.split('?');
+        if (uri.length === 2) {
+          let vars = uri[1].split('&');
+          let getVars = {};
+          let tmp = '';
+          vars.forEach(function (v) {
+            tmp = v.split('=');
+            if (tmp.length === 2)
+              getVars[tmp[0]] = tmp[1];
+          });
+          return getVars.url;
+        }
+      }
+
+      function set_url() {
+        const button = document.getElementsByClassName("download-url-button")[0];
+        const input = document.getElementsByClassName("download-url-input")[0];
+        button.addEventListener("click", function() {
+          window.location.search = 'url=' + encodeURIComponent(input.value);
+        } , false);
+        // window.location.search = 'url=' . encodeURIComponent(get_url());
+
+        console.log(input.value);
+        console.log('hi');
+        // window.location.search = 'url=' + encodeURIComponent(input.value);
+      }
+
+    window.onload = function() {
+      // Begin Swagger UI call region
+      const ui = SwaggerUIBundle({
+        url: get_url(),
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      })
+      // End Swagger UI call region
+
+      window.ui = ui
+
+      set_url();
+    }
+  </script>
+  </body>
+</html>
