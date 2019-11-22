@@ -1,3 +1,6 @@
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.2.2/swagger-ui-bundle.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.2.2/swagger-ui-standalone-preset.js"></script>-->
+
 <template>
     <div id="app">
         <div id="swagger-ui"></div>
@@ -39,7 +42,10 @@
 
 <script>
   // import HelloWorld from './components/HelloWorld.vue'
-  import {SwaggerUICore} from 'swagger-ui';
+  // import {SwaggerUICore} from 'swagger-ui';
+  import SwaggerUIBundle from './swagger-ui-bundle';
+  import SwaggerUIStandalonePreset from './swagger-ui-standalone-preset'
+
   import jsyaml from 'js-yaml';
 
   export default {
@@ -78,7 +84,9 @@
       const res = await fetch('https://raw.githubusercontent.com/swagger-api/swagger-samples/master/java/inflector-dropwizard/src/main/swagger/swagger.yaml')
       const res_body = await res.text();
       const swagger_json = jsyaml.load(res_body);
-      console.log(swagger_json)
+      /* eslint-disable no-console */
+      console.log(swagger_json);
+      /* eslint-enable no-console */
 
       const ui2 = SwaggerUIBundle({
         spec: swagger_json,
@@ -203,9 +211,9 @@
               }
             }
           }
-          // Build a system
+
           const ui = SwaggerUIBundle({
-            spec: spec,
+            url: "https://petstore.swagger.io/v2/swagger.json",
             dom_id: '#swagger-ui',
             deepLinking: true,
             presets: [
@@ -215,9 +223,12 @@
             plugins: [
               SwaggerUIBundle.plugins.DownloadUrl
             ],
-            layout: 'StandaloneLayout'
+            layout: "StandaloneLayout"
           })
+          // End Swagger UI call region
+
           window.ui = ui
+          // Build a system
         }
       }
     }
