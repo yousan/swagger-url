@@ -1,4 +1,4 @@
-# swagger-url
+# Swagger URL
 Share your Swagger YAML with URL.
 
 https://swagger-url.now.sh/
